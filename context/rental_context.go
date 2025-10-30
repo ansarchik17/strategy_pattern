@@ -1,16 +1,18 @@
 package context
 
-import "assignment6_Strategy/strategies"
+import (
+	"assignment6_Strategy/pricing_strategy"
+)
 
 type RentalContext struct {
-	pricingStrategy strategies.PricingStrategy
+	pricingStrategy pricing_strategy.PricingStrategy
 }
 
-func NewRentalContext(strategy strategies.PricingStrategy) *RentalContext {
+func NewRentalContext(strategy pricing_strategy.PricingStrategy) *RentalContext {
 	return &RentalContext{pricingStrategy: strategy}
 }
 
-func (rentalcontext *RentalContext) SetPricingStrategy(strategy strategies.PricingStrategy) {
+func (rentalcontext *RentalContext) SetPricingStrategy(strategy pricing_strategy.PricingStrategy) {
 	rentalcontext.pricingStrategy = strategy
 }
 

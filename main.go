@@ -7,19 +7,34 @@ import (
 )
 
 func main() {
-	context := context.NewRentalContext(&strategies.StandardPricing{})
+	var choice int
 	basePrice := 50.0
+	days := 0
 
-	cost1 := context.CalculateRental(5, basePrice)
-	fmt.Printf("Cost for 5 days (Standard): $%.2f\n", cost1)
+	fmt.Println("Choose a Pricing Strategy:")
+	fmt.Println("1. Standard Pricing")
+	fmt.Println("2. Premium Pricing")
+	fmt.Println("3. Seasonal Pricing")
+	fmt.Print("Enter choice (1-3): ")
+	fmt.Scan(&choice)
 
-	context.SetPricingStrategy(&strategies.PremiumPricing{})
+	fmt.Print("Enter number of rental days: ")
+	fmt.Scan(&days)
 
-	cost2 := context.CalculateRental(10, basePrice)
-	fmt.Printf("Cost for 10 days (Premium): $%.2f\n", cost2)
+	var rentalContext *context.RentalContext
 
-	context.SetPricingStrategy(&strategies.SeasonalPricing{})
+	switch choice {
+	case 1:
+		rentalContext = context.NewRentalContext(&strategies.StandardPricing{})
+	case 2:
+		rentalContext = context.NewRentalContext(&strategies.PremiumPricing{})
+	case 3:
+		rentalContext = context.NewRentalContext(&strategies.SeasonalPricing{})
+	default:
+		fmt.Println("Invalid choice! Defaulting to Standard Pricing.")
+		rentalContext = context.NewRentalContext(&strategies.StandardPricing{})
+	}
 
-	cost3 := context.CalculateRental(3, basePrice)
-	fmt.Printf("Cost for 3 days (Seasonal): $%.2f\n", cost3)
+	total := rentalContext.CalculateRental(days, basePrice)
+	fmt.Printf("\nTotal rental cost: $%.2f\n", total)
 }
