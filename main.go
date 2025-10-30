@@ -31,8 +31,7 @@ func main() {
 	case 3:
 		rentalContext = context.NewRentalContext(&strategies.SeasonalPricing{})
 	default:
-		fmt.Println("Invalid choice! Defaulting to Standard Pricing.")
-		rentalContext = context.NewRentalContext(&strategies.StandardPricing{})
+		rentalContext = context.NewRentalContext(nil)
 	}
 
 	total := rentalContext.CalculateRental(days, basePrice)
